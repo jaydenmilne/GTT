@@ -34,7 +34,8 @@ Long Term Goals
 ===
 Probably not going to happen:
 
-- Mouse steers ship, a plot
+- Mouse steers ship
+- A plot
 - View is centered on player ship
 - An actual HUD
 - More baddies
