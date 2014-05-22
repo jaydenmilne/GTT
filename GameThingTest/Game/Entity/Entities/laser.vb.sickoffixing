@@ -19,6 +19,8 @@ Imports System.Drawing.Drawing2D
 <Serializable()>
 Public Class laser : Inherits Entity
 
+
+
     Public Enum LaserAnimationStatus
         Starting
         Cruising
@@ -84,7 +86,7 @@ Public Class laser : Inherits Entity
         Return MyPen
     End Function
 
-    Public Overrides Function GetPublicGeometry() As System.Drawing.PointF()
+    Public Overrides Function GetCollisionable() As System.Drawing.PointF()
         Return PublicGeom
     End Function
 
@@ -179,4 +181,15 @@ Public Class laser : Inherits Entity
 
 
 
+    Public Overrides Function GetDrawModel() As DrawModel
+        Dim TempMOdel As New DrawModel()
+        TempMOdel.Hitbox = PublicGeom
+        Dim ListOStuff As New List(Of ItemLayer)
+        ListOStuff.Add(New ItemLayer(PublicGeom, True, Color.Green))
+
+        TempMOdel.DrawableLayers = ListOStuff
+
+        Return TempMOdel
+
+    End Function
 End Class

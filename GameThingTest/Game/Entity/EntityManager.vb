@@ -11,7 +11,7 @@ Public Class EntityManager
     Public NumOfEntities As Integer = 1
     Public DeathRow As New List(Of Integer)
     Public LastEntity As Integer = 0
-
+    Public SHipsKilled As Integer = 0
     Sub New()
         'serialization
     End Sub
@@ -58,6 +58,19 @@ Public Class EntityManager
             Throw New Exception("Tried to remove an already removed entity. You're bad!")
         End If
 
+        If EntityToRemove = MainForm.Game.PlayerID Then
+            Dim PauseMenu As New DeadMenu
+            MainForm.Game.ShowMenu(PauseMenu.MenuItems, "You died!")
+        End If
+        Dim EntToRem = WadOEntities(EntityToRemove)
+
+        If EntToRem.EntityType = Entities.Ship Then
+            SHipsKilled += 1
+            If SHipsKilled > MainForm.Game.HighScoreThisOne.HighScore Then
+                MainForm.Game.HighScoreThisOne.HighScore = SHipsKilled
+                MainForm.Game.UpdateHighScore()
+            End If
+        End If
         WadOEntities(EntityToRemove) = Nothing
 
         If EntityToRemove = LastEntity Then
@@ -75,6 +88,7 @@ Public Class EntityManager
 
 
         NumOfEntities -= 1
+
 
     End Sub
 

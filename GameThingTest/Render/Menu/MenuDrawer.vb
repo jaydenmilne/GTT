@@ -1,6 +1,8 @@
 ﻿Public Class MenuDrawer : Inherits HUDObject
 
-    Public Shared Sub DrawMenu(ByVal TriLeg As Integer, MenuToDraw As List(Of MenuItem), MenuName As String)
+    Public Shared Sub DrawMenu(ByVal TriLeg As Integer)
+        Dim MenuToDraw = MainForm.Game.MenuToDraw
+        Dim Menuname As String = "Pause"
 
 
         Dim MenuFont As New Font(pfc.Families(0), TriLeg, System.Drawing.GraphicsUnit.Pixel)

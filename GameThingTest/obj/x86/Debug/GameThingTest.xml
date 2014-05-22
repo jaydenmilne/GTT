@@ -19,6 +19,14 @@ GameThingTest
 	<summary>
   A strongly-typed resource class, for looking up localized strings, etc.
 </summary>
+</member><member name="F:GameThingTest.AdvancedTimer._timerType">
+	<summary>
+ Timer type.
+ 0 = System.Threading ( default )
+ 1 = Windows.Forms
+ 2 = Microtimer ( custom code ).
+ 3 = Multimedia timer ( windows mm dll ).
+ </summary>
 </member>
 </members>
 </doc>

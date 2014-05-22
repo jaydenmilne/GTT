@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.Serialization
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
+Imports System.Xml.Serialization
 
 
 Public Class Game
@@ -23,7 +24,9 @@ Public Class Game
 
     Public MenuName As String
 
-    Private MyPauseMenu As PauseMenu
+    Public MyPauseMenu As PauseMenu
+
+    Public PlayerID As Integer
 
     Public AlreadySerialized As Boolean = False
 
@@ -51,27 +54,56 @@ Public Class Game
         Temp.ShieldPoints = 100
         Temp.HullPoints = 100
         Temp.Dead = False
-        Temp.RechargeRate = 1000
+        Temp.RechargeRate = 2000
 
-        Timer = MainForm.GameTimer
 
         GameWatch.Start()
 
-        Timer.Interval = 1
-        Timer.Start()
-        EntityManager.SpawnEntity(New TriangleShooter(New PointF(500, 500), 0, 1, Temp, -1))
+        Dim AdvancedTimer As New AdvancedTimer(3, 16, AddressOf MainForm.Tick)
+
+        'AdvancedTimer.Start()
+
+        MainForm.Timer1.Start()
+
+        Dim asdf As New XWingModelCreator
+        Dim asdf2 As New TriangleModelCreator
+
+        PlayerID = EntityManager.SpawnEntity(New GenericShip(New PointF(500, 500), 0, 1, Temp, -1, AddressOf asdf.GetAModel, False))
+        EntityManager.SpawnEntity(New GenericShip(New PointF(1000, 500), 247, 1, Temp, -1, AddressOf asdf2.GetAModel, True))
+        asdf2 = New TriangleModelCreator
+        EntityManager.SpawnEntity(New GenericShip(New PointF(500, 1000), 79, 1, Temp, -1, AddressOf asdf2.GetAModel, True))
+        asdf2 = New TriangleModelCreator
+        EntityManager.SpawnEntity(New GenericShip(New PointF(100, 100), 10, 1, Temp, -1, AddressOf asdf2.GetAModel, True))
+
 
         'EntityManager.SpawnEntity(New Square(New PointF(100, 100), 0, 0))
 
+
+        LoadHighScore()
 
 
     End Sub
 
     Public Sub Update(ByVal ElapsedMilliseconds As Double)
 
-        If EntityManager.NumOfEntities <= 25 Then
+        Dim NumOfShips As Integer = 0
+
+        For i As Integer = 0 To EntityManager.LastEntity
+            If Not IsNothing(EntityManager.WadOEntities(i)) Then
+                If EntityManager.WadOEntities(i).ToString.Contains("Generic") Then
+                    NumOfShips += 1
+                End If
+            End If
+
+
+
+        Next
+
+        If NumOfShips < 10 Then
 
             Dim Temp As HealthManager.CurrentHealthHolder
+            Dim ModelCreator As New TriangleModelCreator
+
 
             Temp.Damage = 0
             Temp.ShieldPoints = 0
@@ -79,11 +111,21 @@ Public Class Game
             Temp.Dead = False
             Temp.RechargeRate = 0
 
-            Do Until EntityManager.NumOfEntities > 25
-                EntityManager.SpawnEntity(New TriangleShooter(
-                                        New PointF(Random.Next(0, Renderer.ScreenSize.Width), Random.Next(0, Renderer.ScreenSize.Height)),
-                                        Random.Next(0, 360), 0, Temp, -1))
-            Loop
+            Dim RandomLoc As New PointF(Random.Next(0, Renderer.ScreenSize.Width), Random.Next(0, Renderer.ScreenSize.Height))
+            Try
+
+                If Not DrawingUtils.PointInPolygon(RandomLoc, EntityManager.WadOEntities(PlayerID).GetCollisionable) Then
+                    EntityManager.SpawnEntity(New GenericShip(RandomLoc,
+                                        Random.Next(0, 360), 0, Temp, -1, AddressOf ModelCreator.GetAModel, True))
+                End If
+            Catch ex As Exception
+                Console.WriteLine("Oops")
+            End Try
+
+
+
+
+
         End If
 
         If Input.KeyStates(Keys.Escape) Then
@@ -155,6 +197,38 @@ Public Class Game
         EntityManager = CType(Serializer.Deserialize(Stream), EntityManager)
 
         Stream.Close()
+
+
+    End Sub
+
+    Public HighScoreThisOne As New HighScore
+
+    Public Sub UpdateHighScore()
+
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "highscore.xml")
+        Dim writer As TextWriter = New StreamWriter(Path)
+
+        Dim Serializer As New XmlSerializer(GetType(HighScore))
+
+        Serializer.Serialize(writer, HighScoreThisOne)
+
+        writer.Close()
+
+
+    End Sub
+
+    Public Sub LoadHighScore()
+
+        Dim mySerializer As XmlSerializer = New XmlSerializer(GetType(HighScore))
+        ' To read the file, create a FileStream.
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "highscore.xml")
+        Dim myFileStream As FileStream = _
+        New FileStream(Path, FileMode.Open)
+        ' Call the Deserialize method and cast to the object type.
+        HighScoreThisOne = CType( _
+        mySerializer.Deserialize(myFileStream), HighScore)
+
+        myFileStream.Close()
 
 
     End Sub

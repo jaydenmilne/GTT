@@ -38,7 +38,7 @@
 
     'main loop right here
 
-    Private Sub Tick()
+    Public Sub Tick()
 
         Dim PrevTicks As Long = MyWatch.ElapsedTicks
         MyWatch.Restart()
@@ -55,10 +55,11 @@
 
 
 
-    Private Sub GameTimer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GameTimer.Tick
+
+
+
+
+    Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
         Tick()
     End Sub
-
-
-
 End Class

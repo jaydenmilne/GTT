@@ -1,1 +1,0 @@
-This text document only exists so that GitHub for Windows will let me push a GTT 0.08 commit. I don't know why it won't, I suspect that my GTT 0.07 commit is identical. But the show must go on.

@@ -71,15 +71,54 @@ Public Class Renderer
 
         For i As Integer = 0 To Temp.LastEntity
             If Not IsNothing(Temp.WadOEntities(i)) Then
-                If Temp.WadOEntities(i).FillPolygon Then
-                    Buffer.Graphics.FillPolygon(Temp.WadOEntities(i).GetPen.Brush, Temp.WadOEntities(i).GetPublicGeometry)
-                Else
-                    Buffer.Graphics.DrawLines(Temp.WadOEntities(i).GetPen, Temp.WadOEntities(i).GetPublicGeometry)
-                End If
-
+                Buffer.Graphics.DrawLines(Pens.Green, Temp.WadOEntities(i).GetCollisionable)
+                For y As Integer = 0 To Temp.WadOEntities(i).GetDrawModel.DrawableLayers.Count - 1
+                    If Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).DrawThisLayer Then
+                        If Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).IsPolygon Then
+                            Buffer.Graphics.FillPolygon(New SolidBrush(Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).Color), Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).PublicGeom)
+                        Else
+                            Buffer.Graphics.DrawLines(New Pen(New SolidBrush(Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).Color)), Temp.WadOEntities(i).GetDrawModel.DrawableLayers(y).PublicGeom)
+                        End If
+                    End If
+                Next
             End If
+            '    'If Temp.WadOEntities(i).FillPolygon Then
+            '    '    Buffer.Graphics.FillPolygon(Temp.WadOEntities(i).GetPen.Brush, Temp.WadOEntities(i).GetCollisionable)
+            '    'Else
+            '    '    Buffer.Graphics.DrawLines(Temp.WadOEntities(i).GetPen, Temp.WadOEntities(i).GetCollisionable)
+            '    'End If
+
+            '    Buffer.Graphics.DrawLines(Pens.Green, Temp.WadOEntities(i).GetCollisionable)
+
+            '    For Each Item In Temp.WadOEntities(i).GetDrawModel.DrawableLayers
+            '        If Item.DrawThisLayer Then
+            '            If Item.IsPolygon Then
+            '                Buffer.Graphics.FillPolygon(New SolidBrush(Item.Color), Item.PublicGeom)
+            '            Else
+            '                Buffer.Graphics.DrawLines(New Pen(New SolidBrush(Item.Color)), Item.PublicGeom)
+            '            End If
+            '        End If
+
+            '    Next
+
+            'End If
+
+            
 
         Next
+        ' hacked together for last minute
+        Dim MenuFont As New Font(pfc.Families(0), 40, System.Drawing.GraphicsUnit.Pixel)
+        Dim HUDString As String
+        Try
+            HUDString = "High Score: " & MainForm.Game.HighScoreThisOne.HighScore.ToString & vbNewLine & "Shields: " & MainForm.Game.EntityManager.WadOEntities(MainForm.Game.PlayerID).GetHealthWad.ShieldPoints.ToString & _
+            vbNewLine & "Hull: " & MainForm.Game.EntityManager.WadOEntities(MainForm.Game.PlayerID).GetHealthWad.HullPoints.ToString & _
+            vbNewLine & "Enemies Killed: " & MainForm.Game.EntityManager.SHipsKilled
+        Catch ex As Exception
+            HUDString = "You dead!"
+        End Try
+        
+
+        Buffer.Graphics.DrawString(HUDString, MenuFont, Brushes.White, New PointF(HUD.WidthOffset, ScreenSize.Height - (Buffer.Graphics.MeasureString(HUDString, MenuFont).Height)))
 
 
         HUD.Draw(True, MainForm.Game.MenuToDraw, MainForm.Game.MenuName)

@@ -5,6 +5,7 @@ Imports System.Xml
 <Serializable()>
 Public Class rectanglelaser : Inherits Entity
 
+
     Public Enum LaserAnimationStatus
         Starting
         Cruising
@@ -29,10 +30,6 @@ Public Class rectanglelaser : Inherits Entity
 
     Dim MyVector As Vector = New Vector(0, 0)
 
-    Dim PublicGeom() As PointF
-
-    Dim UnMoved() As PointF
-
     Dim Size As Single
 
     Dim AngleInRad As Double
@@ -42,6 +39,11 @@ Public Class rectanglelaser : Inherits Entity
     Dim Damage As Double
 
     Dim PenColor As Color
+
+    Dim Model As DrawModel
+
+    Dim Hitbox() As PointF
+
 
 
 #Region "GettersAndSetters"
@@ -81,12 +83,12 @@ Public Class rectanglelaser : Inherits Entity
         Return MyPen
     End Function
 
-    Public Overrides Function GetPublicGeometry() As System.Drawing.PointF()
-        Return PublicGeom
+    Public Overrides Function GetCollisionable() As System.Drawing.PointF()
+        Return Hitbox
     End Function
 
     Public Overrides Function GetVector() As System.Windows.Vector
-
+        Return MyVector
     End Function
 
     Public Overrides Function GetID() As Integer
@@ -117,23 +119,19 @@ Public Class rectanglelaser : Inherits Entity
         MyPen = New Pen(PassedPenColor)
         PenColor = PassedPenColor
 
+        Dim ModelCreator = New LaserModelCreator()
+        Model = ModelCreator.GetAModel(New SizeF(Length, 10))
+
+
         AngleInRad = ((Angle + 90) * Math.PI) / 180
 
         MyVector = New Vector(Math.Cos(AngleInRad), Math.Sin(AngleInRad))
 
-        ' 5 is a hacked in width value, must be changed later
-
-        UnMoved = {New PointF(0, 0),
-                   New PointF(0, Length),
-                   New PointF(5, Length),
-                   New PointF(5, 0),
-                   New PointF(0, 0),
-                   New PointF(0, Length)}
+        ' 5 is a hacked in width value, must be changed later, maybe, if i want to
 
         Size = Length
 
         Damage = PassedDamage
-
 
         Update(0)
 
@@ -142,7 +140,12 @@ Public Class rectanglelaser : Inherits Entity
     Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
         If OtherEntityType <> Entities.Laser Then
-            MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+            If OtherID <> Creator Then
+                MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+            End If
+
+
+
         End If
 
     End Sub
@@ -155,37 +158,40 @@ Public Class rectanglelaser : Inherits Entity
     Public Overrides Sub Update(ByVal d As Double)
         Dim TransMatrix As New Matrix
 
-        Dim ThisPoints() As PointF
-
-        ThisPoints = UnMoved.ToArray()
 
         CurrentLocation.X = CSng(CurrentLocation.X + (MyVector.X * d))
 
         CurrentLocation.Y = CSng(CurrentLocation.Y + (MyVector.Y * d))
 
 
+        
         TransMatrix.Translate(CurrentLocation.X, CurrentLocation.Y)
 
         TransMatrix.Rotate(Angle)
 
+        For Each Item In Model.DrawableLayers
+            Item.PublicGeom = Item.UnsizedGeom.ToArray()
+            TransMatrix.TransformPoints(Item.PublicGeom)
+        Next
 
-        TransMatrix.TransformPoints(ThisPoints)
+        Hitbox = Model.UnsizedHitbox.ToArray()
 
-        TransMatrix.Reset()
-
-        TransMatrix.Translate(MainForm.Game.ScreenOffset.X, MainForm.Game.ScreenOffset.Y)
-
-        TransMatrix.TransformPoints(ThisPoints)
+        TransMatrix.TransformPoints(Hitbox)
 
 
-        PublicGeom = ThisPoints.ToArray()
 
-        If DrawingUtils.DistanceBetweenTwoPoints(CurrentLocation, StartLocation) > 3000 Then
+        If Not DrawingUtils.PointInPolygon(CurrentLocation, {New PointF(0, 0), New PointF(Renderer.ScreenSize.Width, 0), New PointF(Renderer.ScreenSize.Width, Renderer.ScreenSize.Height), New PointF(0, Renderer.ScreenSize.Height), New PointF(0, 0)}) Then
             MainForm.Game.EntityManager.AddToDeathRow(ThisID)
         End If
+
 
     End Sub
 
 
 
+    Public Overrides Function GetDrawModel() As DrawModel
+
+        Return Model
+
+    End Function
 End Class

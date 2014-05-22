@@ -22,7 +22,7 @@
             Console.WriteLine("your mom") ' I have no idea why this is here
         End If
 
-        If LastEntity <= 1 Then
+        If LastEntity = 0 Then
             Exit Sub
         End If
 
@@ -32,7 +32,7 @@
                 Continue For
             End If
 
-            For CurrentGeometry As Integer = 0 To entities(CurrentEntity).GetPublicGeometry().Length - 2 ' -2 because .length returns 1 based value (array expects 0 based) and we never want (CurrentGeom + 1) to fail
+            For CurrentGeometry As Integer = 0 To entities(CurrentEntity).GetCollisionable().Length - 2 ' -2 because .length returns 1 based value (array expects 0 based) and we never want (CurrentGeom + 1) to fail
                 ' Loop over all points
                 For LoopedEntity As Integer = 0 To LastEntity - 1
 
@@ -44,12 +44,12 @@
                         Continue For
                     End If
 
-                    For LoopedGeometry As Integer = 0 To entities(LoopedEntity).GetPublicGeometry().Length - 2
+                    For LoopedGeometry As Integer = 0 To entities(LoopedEntity).GetCollisionable().Length - 2
 
-                        If CheckCollision(entities(CurrentEntity).GetPublicGeometry()(CurrentGeometry),
-                                       entities(CurrentEntity).GetPublicGeometry()(CurrentGeometry + 1),
-                                       entities(LoopedEntity).GetPublicGeometry()(LoopedGeometry),
-                                       entities(LoopedEntity).GetPublicGeometry()(LoopedGeometry + 1)) Then
+                        If CheckCollision(entities(CurrentEntity).GetCollisionable()(CurrentGeometry),
+                                       entities(CurrentEntity).GetCollisionable()(CurrentGeometry + 1),
+                                       entities(LoopedEntity).GetCollisionable()(LoopedGeometry),
+                                       entities(LoopedEntity).GetCollisionable()(LoopedGeometry + 1)) Then
 
 
                             Dim LoopedVector As System.Windows.Vector = entities(LoopedEntity).GetVector()

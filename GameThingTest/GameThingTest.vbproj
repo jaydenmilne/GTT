@@ -15,6 +15,22 @@
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\jaydlmiln44\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -53,6 +69,18 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>BD16EFF54F36518E3B05647A8D7AF37E2DF5C8C3</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GameThingTest_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -90,18 +118,31 @@
     <Compile Include="Game\Collision\CollisionDetector.vb" />
     <Compile Include="Game\Diagnostics.vb" />
     <Compile Include="Game\Entity\AI\AIModule.vb" />
+    <Compile Include="Game\Entity\DrawModel\DrawModel.vb" />
+    <Compile Include="Game\Entity\DrawModel\ItemLayer.vb" />
+    <Compile Include="Game\Entity\Entities\Models\GeomCreator.vb" />
+    <Compile Include="Game\Entity\Entities\Models\LaserModelCreator.vb" />
+    <Compile Include="Game\Entity\Entities\Models\XWingModelCreator.vb" />
+    <Compile Include="Game\Entity\Entities\GenericShip.vb" />
     <Compile Include="Game\Entity\Entities\rectanglelaser.vb" />
-    <Compile Include="Game\Entity\Entities\laser.vb" />
+    <None Include="GameThingTest_TemporaryKey.pfx" />
+    <None Include="Game\Entity\Entities\laser.vb.sickoffixing" />
+    <Compile Include="Game\Entity\Entities\XWingFighter.vb" />
     <Compile Include="Game\Entity\EntityManager.vb" />
     <Compile Include="Game\Entity\Entity.vb" />
     <Compile Include="Game\Entity\EntityTypes.vb" />
     <Compile Include="Game\Entity\HealthManager.vb" />
+    <Compile Include="Game\Entity\Entities\Models\TriangleModelCreator.vb" />
     <Compile Include="Game\Game.vb" />
+    <Compile Include="Game\GameOptions.vb" />
     <Compile Include="Game\GameState.vb" />
-    <Compile Include="Game\Menu\MenuItem.vb" />
-    <Compile Include="Game\Menu\HUDAnimator.vb" />
-    <Compile Include="Game\Menu\MenuDrawer.vb" />
-    <Compile Include="Game\Menu\Menus\PauseMenu.vb" />
+    <Compile Include="Game\HighScore.vb" />
+    <Compile Include="Render\Menu\MenuItem.vb" />
+    <Compile Include="Render\Menu\HUDAnimator.vb" />
+    <Compile Include="Render\Menu\MenuDrawer.vb" />
+    <Compile Include="Render\Menu\Menus\DeadMenu.vb" />
+    <Compile Include="Render\Menu\Menus\PauseMenu.vb" />
+    <Compile Include="Render\AdvancedTimer.vb" />
     <Compile Include="Render\DrawingUtils.vb" />
     <Compile Include="Render\RenderShapes\Copy of CutOffRectangle.vb" />
     <Compile Include="Render\RenderShapes\CutOffRectangle.vb" />
@@ -131,7 +172,6 @@
     </Compile>
     <Compile Include="Render\Renderer.vb" />
     <None Include="Game\Entity\Entities\square.vb.sickoffixing" />
-    <Compile Include="Game\Entity\Entities\triangleshooter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Debug.resx">
@@ -162,6 +202,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\favicon %281%29.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

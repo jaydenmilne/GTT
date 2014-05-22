@@ -101,11 +101,11 @@ Public Class HealthManager
     Public Sub Update(ByVal d As Double)
 
 
-        If (MainForm.Game.GameWatch.ElapsedMilliseconds - LastHit) > 10000L Then ' check to see if 10s has elapsed
+        If (MainForm.Game.GameWatch.ElapsedMilliseconds - LastHit) > Health.RechargeRate Then ' check to see if 10s has elapsed
 
             If Health.ShieldPoints < MaxHealth.ShieldPoints Then ' make sure we aren't adding more to shield than it can hold
 
-                Health.ShieldPoints += 0.01 * d
+                Health.ShieldPoints += 0.09 * d
 
                 If Health.ShieldPoints > MaxHealth.ShieldPoints Then ' check if we overshot
 

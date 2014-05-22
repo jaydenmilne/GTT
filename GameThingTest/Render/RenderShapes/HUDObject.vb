@@ -49,7 +49,7 @@
 
 
         If HUDAnimator.CurrentState = HUDAnimator.States.Menu And DrawMenu Then
-            MenuDrawer.DrawMenu(TriLeg, MenuToDraw, MenuName)
+            MenuDrawer.DrawMenu(TriLeg)
         End If
 
 

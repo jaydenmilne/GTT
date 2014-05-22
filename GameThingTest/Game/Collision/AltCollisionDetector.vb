@@ -81,7 +81,7 @@
             End If
 
 
-            If IsNothing(entities(CurrentEntity).GetPublicGeometry) Then
+            If IsNothing(entities(CurrentEntity).GetCollisionable) Then
                 Continue For
             End If
 
@@ -96,13 +96,13 @@
                 End If
 
 
-                If IsNothing(entities(LoopedEntity).GetPublicGeometry) Then
+                If IsNothing(entities(LoopedEntity).GetCollisionable) Then
                     Continue For
                 End If
 
-                For LoopedGeom As Integer = 0 To entities(LoopedEntity).GetPublicGeometry.Length - 1
+                For LoopedGeom As Integer = 0 To entities(LoopedEntity).GetCollisionable.Length - 1
 
-                    If PointInPolygon(entities(LoopedEntity).GetPublicGeometry(LoopedGeom), entities(CurrentEntity).GetPublicGeometry.ToList) Then
+                    If PointInPolygon(entities(LoopedEntity).GetCollisionable(LoopedGeom), entities(CurrentEntity).GetCollisionable.ToList) Then
 
 
                         Dim LoopedVector As System.Windows.Vector = entities(LoopedEntity).GetVector()

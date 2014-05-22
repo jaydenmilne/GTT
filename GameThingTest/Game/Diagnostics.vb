@@ -6,5 +6,6 @@
     Public Shared CollisionTime As Double
     Public Shared OneToSpyOn As Integer
     Public Shared Caller As String
+    Public Shared Thingie As PointF
 
 End Class

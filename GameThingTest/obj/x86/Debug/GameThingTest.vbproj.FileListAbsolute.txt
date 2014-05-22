@@ -20,3 +20,19 @@ C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Game
 C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GenerateResource.write.1.tlog
 C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Debug.resources
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Debug.resources
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.exe
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.xml
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.pdb
+E:\Computer Programming\GameThingTest\GameThingTest\bin\Debug\GameThingTest.exe
+E:\Computer Programming\GameThingTest\GameThingTest\bin\Debug\GameThingTest.pdb
+E:\Computer Programming\GameThingTest\GameThingTest\bin\Debug\GameThingTest.xml
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Debug.resources
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GenerateResource.write.1.tlog
+E:\Computer Programming\GameThingTest\GameThingTest\bin\Debug\GameThingTest.exe.manifest
+E:\Computer Programming\GameThingTest\GameThingTest\bin\Debug\GameThingTest.application
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.exe.manifest
+E:\Computer Programming\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.application

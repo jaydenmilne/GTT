@@ -9,6 +9,12 @@
         Label4.Text = CStr(Input.MouseStates(Input.Mouse.Right))
 
         Dim TempString As String = "Update: " & CStr(Diagnostics.UpdateTime) & vbNewLine & "Collision: " & CStr(Diagnostics.CollisionTime) & vbNewLine & "Render: " & CStr(Diagnostics.RenderTime) & vbNewLine & "Buffer Fill: " & Diagnostics.BufferRender
+        Dim AnotherString = vbNewLine & vbNewLine & _
+            Cursor.Position.ToString & _
+            Diagnostics.Thingie.ToString
+
+        TempString = TempString & AnotherString
+
         TextBox2.Text = TempString
 
 

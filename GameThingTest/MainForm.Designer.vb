@@ -24,12 +24,12 @@ Partial Class MainForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Me.GameTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
-        'GameTimer
+        'Timer1
         '
-        Me.GameTimer.Interval = 16
+        Me.Timer1.Interval = 16
         '
         'MainForm
         '
@@ -43,6 +43,6 @@ Partial Class MainForm
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents GameTimer As System.Windows.Forms.Timer
+    Friend WithEvents Timer1 As System.Windows.Forms.Timer
 
 End Class
