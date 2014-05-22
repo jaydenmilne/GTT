@@ -17,6 +17,15 @@
     Private Sub MainForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Renderer.Initialize()
         Game.Initialize()
+        Debug.Show()
+    End Sub
+
+    Private Sub MainForm_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDown
+        Input.MouseDown(e)
+    End Sub
+
+    Private Sub MainForm_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseUp
+        Input.MouseUp(e)
     End Sub
 
     Private Sub MainForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
@@ -49,4 +58,7 @@
     Private Sub GameTimer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GameTimer.Tick
         Tick()
     End Sub
+
+
+
 End Class

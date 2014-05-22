@@ -1,18 +1,33 @@
-﻿Public Class Renderer
+﻿Imports System.Drawing.Text
+Imports System.IO
+Public Class Renderer
 #Region "Public"
     Public Shared Buffer As BufferedGraphics
     Public Shared ScreenSize As Size
-    Public Shared HUD As CutOffRectangle
+    Public Shared HUD As HUDObject
     Public Shared Initialized As Boolean = False
+    Public Shared pfc As New PrivateFontCollection()
 #End Region
 
 #Region "Private"
     Private Shared GraphicsObject As Graphics
     Private Shared BufferContext As New BufferedGraphicsContext()
 
+
+
 #End Region
 
+
     Public Shared Sub Initialize()
+
+        'Awesome Font
+
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "plasmati.ttf")
+
+        pfc.AddFontFile(Path)
+
+
+
 
         'This makes it fullscreen, the order of these matters!
         'TODO - enable option for windowed mode
@@ -23,6 +38,8 @@
         MainForm.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         MainForm.WindowState = FormWindowState.Maximized
         MainForm.Bounds = myScreen.Bounds
+
+
 
 
 
@@ -37,26 +54,26 @@
         ScreenSize = GraphicsObject.VisibleClipBounds.Size.ToSize
         Initialized = True
 
-        Dim TempSize As Size = New Size(CInt(ScreenSize.Width * 0.9), CInt(ScreenSize.Height * 0.9))
+        Dim TempSize As Size = New Size(CInt(ScreenSize.Width * 0.99), CInt(ScreenSize.Height * 0.99))
 
-        HUD = New CutOffRectangle(New Point(0, 0), TempSize)
+        HUD = New HUDObject(New Point(0, 0), TempSize)
 
     End Sub
 
     Public Shared Sub Render(ByVal time As Double)
         Buffer.Graphics.Clear(Color.Black)
-        HUD.Draw()
 
-        Buffer.Graphics.DrawString(CStr(Math.Round(time, 0)), New Font("Time New Roman", 10), Brushes.White, New Point(0, 0))
 
-        For i As Integer = 0 To MainForm.Game.EntityManager.NumOfEntities - 1
-            If IsNothing(MainForm.Game.EntityManager.WadOEntities(i).PublicGeometry) Then
-                Exit For
-            Else
-                Buffer.Graphics.DrawLines(MainForm.Game.EntityManager.WadOEntities(i).DesiredPen, MainForm.Game.EntityManager.WadOEntities(i).PublicGeometry)
+        Buffer.Graphics.DrawString("Frame Time: " & CStr(Math.Round(time, 0)) & " Entities:" & CStr(MainForm.Game.EntityManager.NumOfEntities), New Font("Consolas", 8, FontStyle.Regular), Brushes.White, New Point(0, 0))
+
+        For i As Integer = 0 To MainForm.Game.EntityManager.NumOfEntities + MainForm.Game.EntityManager.AvailibleSpots.Count - 1
+            If Not IsNothing(MainForm.Game.EntityManager.WadOEntities(i)) Then
+                Buffer.Graphics.DrawLines(MainForm.Game.EntityManager.WadOEntities(i).GetPen(), MainForm.Game.EntityManager.WadOEntities(i).GetPublicGeometry())
             End If
         Next
 
+
+        HUD.Draw(True)
 
         Buffer.Render()
 

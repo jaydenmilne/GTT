@@ -2,41 +2,119 @@
 
 Public Class TriangleShooter : Inherits Entity
 
-    Dim CurrentAngle As Single = 0
-    Dim DesiredAngle As Single = 0
+#Region "PublicVars"
+    Public ShadowsCurrentAngle As Single = 0
 
     Public KeyScheme As Integer
 
-    Public Shadows DesiredPen As New Pen(Brushes.OrangeRed, 4)
+    Public MomentumVector As New System.Windows.Vector(0, 0)
 
-    Dim CurrentSize As Integer = 100
-    Dim DesiredSize As Integer = 200
+    Public PublicGeometry() As PointF
+
+#End Region
+
+#Region "PrivateVars"
+
+    Dim DesiredAngle As Single = 0
+
+    Dim OldAngle As Single = 0
+
+    Dim CurrentAngle As Single
+
+    Dim Weight As Double = 0.1
 
     Dim Location As PointF = New PointF(0, 0)
 
-    Dim MomentumVector As New System.Windows.Vector(0, 0)
+    Dim OldLocation As PointF
 
-    Public Shadows PublicGeometry() As PointF
+    Dim ThisType As EntityTypes.Entities = Entities.Ship
+
+    Dim DesiredPen As New Pen(Brushes.OrangeRed, 4)
 
     Dim Size As Single
 
     Dim UnsizedGeom() As PointF = {New PointF(0, 0),
-                                   New PointF(0.5, 1),
-                                   New PointF(1, 0),
-                                   New PointF(0.5, 0.5),
-                                   New PointF(0, 0),
-                                   New PointF(0.5, 1)}
+                               New PointF(0.5, 1),
+                               New PointF(1, 0),
+                               New PointF(0.5, 0.5),
+                               New PointF(0, 0),
+                               New PointF(0.5, 1)} ' this is actually critically important for the collision detection system
 
     Dim SizedGeom() As PointF
 
-    Public Sub Collided()
-        MomentumVector = New System.Windows.Vector(0, 0)
+#End Region
+
+#Region "GettersAndSetters"
+
+    Public Overrides Function GetPen() As System.Drawing.Pen
+        Return DesiredPen
+    End Function
+
+    Public Overrides Function GetVector() As System.Windows.Vector
+        Return MomentumVector
+    End Function
+
+    Public Overrides Function EntityType() As EntityTypes.Entities
+        Return ThisType
+    End Function
+
+    Dim ThisID As Integer
+
+    Public Overrides Function GetID() As Integer
+        Return ThisID
+    End Function
+
+    Public Overrides Sub SetID(ByVal ID As Integer)
+        ThisID = ID
+    End Sub
+
+    Public Overrides Function GetAngle() As Single
+        Return CurrentAngle
+    End Function
+
+    Public Overrides Function GetPublicGeometry() As PointF()
+        Return PublicGeometry
+    End Function
+
+#End Region
+
+    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+
+        If OtherEntityType = Entities.Ship Then
+            If OtherVector.Length > MomentumVector.Length Then
+
+                MomentumVector += OtherVector * Weight
+
+            ElseIf OtherVector.Length < MomentumVector.Length Then
+
+                MomentumVector -= OtherVector * Weight
+
+            ElseIf OtherVector.Length = MomentumVector.Length Then
+
+                MomentumVector = New System.Windows.Vector(0, 0)
+
+            End If
+
+            Location = OldLocation
+
+            CurrentAngle = OldAngle
+
+        Else
+
+            MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+
+        End If
+
+
+
     End Sub
 
     Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer)
 
         Dim TransMatrix As New Matrix
-        Size = CSng(0.1 * Renderer.ScreenSize.Width)
+
+        Size = CSng(0.01 * Renderer.ScreenSize.Width)
+
         TransMatrix.Scale(Size * 0.75F, Size)
 
         Location = StartLocation
@@ -50,10 +128,16 @@ Public Class TriangleShooter : Inherits Entity
         KeyScheme = PassScheme
 
     End Sub
-    Public Overloads Sub Update(ByVal d As Double)
+
+    Public Overrides Sub Update(ByVal d As Double)
 
         Dim TransMatrix As New Matrix
+
         Dim ThisPoints() As PointF
+
+        OldLocation = Location
+
+        OldAngle = CurrentAngle
 
         Dim AngleInRad As Double = ((CurrentAngle + 90) * Math.PI) / 180
 
@@ -97,9 +181,13 @@ Public Class TriangleShooter : Inherits Entity
             If Input.KeyStates(Keys.S) Then
                 MomentumVector -= New System.Windows.Vector(0.25F * Math.Cos(AngleInRad), 0.25F * Math.Sin(AngleInRad))
             End If
+
+            If Input.KeyStates(Keys.Q) Then
+                MainForm.Game.EntityManager.AddEntity(New laser(Location, 100, CurrentAngle, Brushes.Green))
+            End If
         End If
 
-        
+
 
 
         ' This is hopefully creating a copy of Unsized Geom
@@ -140,9 +228,10 @@ Public Class TriangleShooter : Inherits Entity
 
         PublicGeometry = ThisPoints.ToArray
 
-
-
     End Sub
+
+
+
 
 
 End Class

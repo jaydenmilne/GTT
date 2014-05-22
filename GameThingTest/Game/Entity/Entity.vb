@@ -1,12 +1,29 @@
-﻿Public Class Entity
-    ' This class is kinda a big deal
+﻿Imports System.Drawing.Drawing2D
 
-    Public Sub Update(ByVal Elapsed As Double)
+Public MustInherit Class Entity
 
+    Public MustOverride Function EntityType() As EntityTypes.Entities
+
+    Public MustOverride Function GetID() As Integer
+
+    Public MustOverride Sub SetID(ByVal ID As Integer) ' Use only if you know exactly what you are doing
+
+    Public MustOverride Function GetAngle() As Single
+
+    Public MustOverride Function GetPen() As Pen
+
+    Public MustOverride Function GetVector() As System.Windows.Vector
+
+    Public MustOverride Function GetPublicGeometry() As PointF()
+
+    Public MustOverride Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+
+    Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer)
     End Sub
 
-    Public PublicGeometry() As PointF
+    Sub New()
+    End Sub
 
-    Public DesiredPen As Pen
+    Public MustOverride Sub Update(ByVal d As Double)
 
 End Class
