@@ -1,4 +1,4 @@
-﻿Public Class OldMenuItem : Inherits Renderer
+﻿Public Class MenuItem : Inherits Renderer
 
     Public Location As Point
     Dim Size As Size
@@ -6,14 +6,14 @@
     Dim Font As Font
     Dim text As String
     Dim Points() As PointF
+    Dim OnClickAction As Func(Of Boolean)
 
-    Sub New(ByVal PassedLoc As Point, ByVal PassedWidth As Integer, ByVal PassedString As String, ByVal PassedAction As Func(Of Boolean, Boolean))
+    Sub New(ByVal PassedString As String, ByVal PassedAction As Func(Of Boolean))
 
-        Location = PassedLoc
-        Size.Width = PassedWidth
+
         TriLeg = CInt(0.003 * ScreenSize.Height)
 
-
+        OnClickAction = PassedAction
         'use Graphics.MeasureString to ensure that it dosen't run out of the box
         'eventually
 
@@ -21,6 +21,17 @@
         Font = New Font(pfc.Families(0), CInt(0.03 * ScreenSize.Height), System.Drawing.GraphicsUnit.Pixel)
 
         Size.Height = CInt(Buffer.Graphics.MeasureString(text, Font).Height)
+
+
+
+
+    End Sub
+
+
+    Function Draw(ByVal PassedLoc As Point, ByVal PassedWidth As Integer) As Integer
+
+        Location = PassedLoc
+        Size.Width = PassedWidth
 
         Points =
                             {
@@ -36,11 +47,6 @@
                             }
 
 
-    End Sub
-
-
-    Function Draw() As Integer ' returns height so the next box can go underneath
-
         Buffer.Graphics.DrawLines(Pens.White, Points)
 
         Dim TextColor As Brush = Brushes.White
@@ -48,7 +54,7 @@
         If DrawingUtils.PointInPolygon(Cursor.Position, Points) Then
 
             If Input.MouseStates(Input.Mouse.Left) Then
-                End
+                OnClickAction()
             End If
 
             Buffer.Graphics.FillPolygon(Brushes.White, Points)

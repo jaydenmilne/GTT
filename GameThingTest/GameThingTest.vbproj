@@ -86,18 +86,22 @@
     <Compile Include="Debug.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Game\Collision\CollisionDetector.vb" />
     <Compile Include="Game\Diagnostics.vb" />
     <Compile Include="Game\Entity\AI\AIModule.vb" />
+    <Compile Include="Game\Entity\Entities\rectanglelaser.vb" />
     <Compile Include="Game\Entity\Entities\laser.vb" />
     <Compile Include="Game\Entity\EntityManager.vb" />
     <Compile Include="Game\Entity\Entity.vb" />
     <Compile Include="Game\Entity\EntityTypes.vb" />
+    <Compile Include="Game\Entity\HealthManager.vb" />
     <Compile Include="Game\Game.vb" />
     <Compile Include="Game\GameState.vb" />
+    <Compile Include="Game\Menu\NewMenuItem.vb" />
     <Compile Include="Game\Menu\HUDAnimator.vb" />
     <Compile Include="Game\Menu\MenuDrawer.vb" />
     <Compile Include="Game\Menu\MenuItem.vb" />
-    <Compile Include="Game\Menu\MenuObject.vb" />
+    <Compile Include="Game\Menu\Menus\PauseMenu.vb" />
     <Compile Include="Render\DrawingUtils.vb" />
     <Compile Include="Render\RenderShapes\Copy of CutOffRectangle.vb" />
     <Compile Include="Render\RenderShapes\CutOffRectangle.vb" />
@@ -126,7 +130,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Render\Renderer.vb" />
-    <Compile Include="Game\Entity\Entities\square.vb" />
+    <None Include="Game\Entity\Entities\square.vb.sickoffixing" />
     <Compile Include="Game\Entity\Entities\triangleshooter.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +148,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Collision\CollisionDetector.vb" />
+    <Compile Include="Game\Collision\AltCollisionDetector.vb" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

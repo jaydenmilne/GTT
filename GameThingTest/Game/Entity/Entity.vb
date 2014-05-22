@@ -16,6 +16,10 @@ Public MustInherit Class Entity
 
     Public MustOverride Function GetPublicGeometry() As PointF()
 
+    Public MustOverride Function GetHealthWad() As HealthManager.CurrentHealthHolder
+
+    Public MustOverride Function FillPolygon() As Boolean
+
     Public MustOverride Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
     Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer)
@@ -25,5 +29,9 @@ Public MustInherit Class Entity
     End Sub
 
     Public MustOverride Sub Update(ByVal d As Double)
+
+    Public MustOverride Function GetCreator() As Integer
+
+    
 
 End Class

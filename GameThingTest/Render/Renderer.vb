@@ -22,7 +22,7 @@ Public Class Renderer
 
         'Awesome Font
 
-        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "plasmati.ttf")
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "hemi head bd it.ttf")
 
         pfc.AddFontFile(Path)
 
@@ -71,13 +71,16 @@ Public Class Renderer
 
         For i As Integer = 0 To Temp.LastEntity
             If Not IsNothing(Temp.WadOEntities(i)) Then
+                If Temp.WadOEntities(i).EntityType() = Entities.Laser Then
+                    Buffer.Graphics.FillPolygon(Temp.WadOEntities(i).GetPen.Brush, Temp.WadOEntities(i).GetPublicGeometry)
+                End If
                 Buffer.Graphics.DrawLines(Temp.WadOEntities(i).GetPen, Temp.WadOEntities(i).GetPublicGeometry)
             End If
 
         Next
 
 
-        HUD.Draw(True)
+        HUD.Draw(True, MainForm.Game.MenuToDraw, MainForm.Game.Menuname)
 
         MainForm.Game.GeneralWatch.Stop()
         Diagnostics.RenderTime = MainForm.Game.GeneralWatch.ElapsedTicks / Stopwatch.Frequency * 1000

@@ -1,23 +1,7 @@
 ﻿Imports System.Windows
 Imports System.Drawing.Drawing2D
 
-'
-''
-'
-'
-'
-''
-'   THIS CLASS IS DEPRECIATED, USE RECTANGLELASER INSTEAD
-'
-'
-'
-' kthanks jayden
-'
-'
-
-'
-
-Public Class laser : Inherits Entity
+Public Class rectanglelaser : Inherits Entity
 
     Public Enum LaserAnimationStatus
         Starting
@@ -59,6 +43,10 @@ Public Class laser : Inherits Entity
 
     Public Overrides Function GetCreator() As Integer
         Return Creator
+    End Function
+
+    Public Overrides Function FillPolygon() As Boolean
+        Return True
     End Function
 
     Public Overrides Function GetHealthWad() As HealthManager.CurrentHealthHolder
@@ -112,26 +100,29 @@ Public Class laser : Inherits Entity
         CurrentLocation = StartLocation
         Angle = PassedAngle
         Creator = Spawner
-        MyPen = New Pen(PassedPenColor, 5)
+        MyPen = New Pen(PassedPenColor)
 
         AngleInRad = ((Angle + 90) * Math.PI) / 180
 
         MyVector = New Vector(Math.Cos(AngleInRad), Math.Sin(AngleInRad))
 
+        ' 5 is a hacked in width value, must be changed later
+
         UnMoved = {New PointF(0, 0),
-                   New PointF(CSng(MyVector.X * Length), CSng(MyVector.Y * Length))}
+                   New PointF(0, Length),
+                   New PointF(5, Length),
+                   New PointF(5, 0),
+                   New PointF(0, 0),
+                   New PointF(0, Length)}
 
         Size = Length
 
         Damage = PassedDamage
 
+
         Update(0)
 
     End Sub
-
-    Public Overrides Function FillPolygon() As Boolean
-        Return False
-    End Function
 
     Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
@@ -159,6 +150,9 @@ Public Class laser : Inherits Entity
 
 
         TransMatrix.Translate(CurrentLocation.X, CurrentLocation.Y)
+
+        TransMatrix.Rotate(Angle)
+
 
         TransMatrix.TransformPoints(ThisPoints)
 

@@ -30,18 +30,7 @@
 
     End Sub
 
-    Public Sub Draw(ByVal DrawMenu As Boolean)
-
-        'Dim Points() As PointF =
-        '    {
-        '        New PointF(WidthOffset + TriLeg, HeightOffset),
-        '        New PointF(ScreenSize.Width - WidthOffset, HeightOffset),
-        '        New PointF(ScreenSize.Width - WidthOffset, ScreenSize.Height - (HeightOffset + TriLeg)),
-        '        New PointF(ScreenSize.Width - (WidthOffset + TriLeg), ScreenSize.Height - HeightOffset),
-        '        New PointF(WidthOffset, ScreenSize.Height - HeightOffset),
-        '        New PointF(WidthOffset, TriLeg + HeightOffset),
-        '        New PointF(WidthOffset + TriLeg, HeightOffset)
-        '    }
+    Public Sub Draw(ByVal DrawMenu As Boolean, MenuToDraw As List(Of MenuItem), ByVal MenuName As String)
 
         Dim Points() As PointF =
             {
@@ -60,7 +49,7 @@
 
 
         If HUDAnimator.CurrentState = HUDAnimator.States.Menu And DrawMenu Then
-            MenuDrawer.DrawMenu(TriLeg)
+            MenuDrawer.DrawMenu(TriLeg, MenuToDraw, MenuName)
         End If
 
 

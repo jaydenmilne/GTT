@@ -1,8 +1,6 @@
 ﻿Public Class MenuDrawer : Inherits HUDObject
 
-    Public Shared ABox As MenuItem
-
-    Public Shared Sub DrawMenu(ByVal TriLeg As Integer)
+    Public Shared Sub DrawMenu(ByVal TriLeg As Integer, MenuToDraw As List(Of MenuItem), MenuName As String)
 
 
         Dim MenuFont As New Font(pfc.Families(0), TriLeg, System.Drawing.GraphicsUnit.Pixel)
@@ -22,19 +20,19 @@
         Buffer.Graphics.FillPolygon(Brushes.Black, HUD.Geom)
 
 
-        Buffer.Graphics.DrawString("Game Paused", MenuFont, Brushes.White, TitleTextLocation, TitleTextFormat)
+        Buffer.Graphics.DrawString(MenuName, MenuFont, Brushes.White, TitleTextLocation, TitleTextFormat)
 
-        Dim Location As Point = New Point(CInt(HUD.WidthOffset + TriLeg), CInt(TitleTextLocation.Y + Buffer.Graphics.MeasureString("asdf", MenuFont).Height))
+        Dim FirstLocation As Point = New Point(CInt(HUD.WidthOffset + TriLeg), CInt(TitleTextLocation.Y + Buffer.Graphics.MeasureString("asdf", MenuFont).Height))
 
+        Dim ItemWidth = CInt(ScreenSize.Width - (HUD.WidthOffset * 2 + HUD.TriLeg * 2))
 
+        Dim TotalOffset As Integer = 0
 
-        ABox = New MenuItem(Location,
-                                   CInt(ScreenSize.Width - (HUD.WidthOffset * 2 + HUD.TriLeg * 2)),
-                                   "Quit Game", AddressOf DoStuff)
+        For Each MenuItem In MenuToDraw
 
+            TotalOffset += MenuItem.Draw(New Point(FirstLocation.X, FirstLocation.Y + TotalOffset), ItemWidth) + CInt(ScreenSize.Height * 0.014)
 
-        ABox.Draw()
-
+        Next
 
 
 

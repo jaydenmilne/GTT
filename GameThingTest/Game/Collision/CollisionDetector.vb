@@ -15,19 +15,18 @@
 
     End Function
 
-    Public Sub CheckAllForCollission(ByVal entities() As Entity, ByVal NumberOfEntities As Integer)
-
+    Public Sub CheckAllForCollision(ByVal entities() As Entity, ByVal LastEntity As Integer)
 
 
         If Input.KeyStates(Keys.L) Then
-            Console.WriteLine("your mom") ' I have no i
+            Console.WriteLine("your mom") ' I have no idea why this is here
         End If
 
-        If NumberOfEntities <= 1 Then
+        If LastEntity <= 1 Then
             Exit Sub
         End If
 
-        For CurrentEntity As Integer = 0 To NumberOfEntities - 1 ' loop over all entities
+        For CurrentEntity As Integer = 0 To LastEntity - 1 ' loop over all entities
 
             If IsNothing(entities(CurrentEntity)) Then ' skip nulls
                 Continue For
@@ -35,7 +34,7 @@
 
             For CurrentGeometry As Integer = 0 To entities(CurrentEntity).GetPublicGeometry().Length - 2 ' -2 because .length returns 1 based value (array expects 0 based) and we never want (CurrentGeom + 1) to fail
                 ' Loop over all points
-                For LoopedEntity As Integer = 0 To NumberOfEntities - 1
+                For LoopedEntity As Integer = 0 To LastEntity - 1
 
                     If LoopedEntity = CurrentEntity Then ' Don't want to check own entity for collisions
                         Exit For

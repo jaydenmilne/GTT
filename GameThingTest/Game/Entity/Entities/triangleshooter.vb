@@ -29,7 +29,7 @@ Public Class TriangleShooter : Inherits Entity
 
     Dim ThisType As EntityTypes.Entities = Entities.Ship
 
-    Dim DesiredPen As New Pen(Brushes.OrangeRed, 4)
+    Dim DesiredPen As Pen
 
     Dim Size As Single
 
@@ -42,12 +42,24 @@ Public Class TriangleShooter : Inherits Entity
 
     Dim SizedGeom() As PointF
 
+    Dim MyHealthMgr As HealthManager
+
+    Dim Creator As Integer
+
 #End Region
 
 #Region "GettersAndSetters"
 
+    Public Overrides Function FillPolygon() As Boolean
+        Return True
+    End Function
+
     Public Overrides Function GetPen() As System.Drawing.Pen
         Return DesiredPen
+    End Function
+
+    Public Overrides Function GetCreator() As Integer
+        Return Creator
     End Function
 
     Public Overrides Function GetVector() As System.Windows.Vector
@@ -76,15 +88,24 @@ Public Class TriangleShooter : Inherits Entity
         Return PublicGeometry
     End Function
 
+    Public Overrides Function GetHealthWad() As HealthManager.CurrentHealthHolder
+        Return MyHealthMgr.Health
+    End Function
+
 #End Region
 
     Public Overrides Function ToString() As String
-        Return CStr(KeyScheme)
+
+        Return "A TriangleShooter at " & Location.ToString & " with momentum " & MomentumVector.ToString & " and keyscheme " & KeyScheme.ToString & vbNewLine _
+                    & vbTab & " Hull Health: " & MyHealthMgr.Health.HullPoints.ToString & " Shield Health: " & MyHealthMgr.Health.ShieldPoints.ToString & vbNewLine _
+                    & vbTab & "LastHit: " & MyHealthMgr.LastHit.ToString & " CurrentTimer " & MainForm.Game.GameWatch.ElapsedMilliseconds.ToString
+
     End Function
 
     Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
-        If OtherEntityType = Entities.Ship Then
+        If OtherEntityType = Entities.Ship Then ' need to add math to do damage based on mass of other ship
+
             If OtherVector.Length > MomentumVector.Length Then
 
                 MomentumVector += OtherVector * Weight
@@ -103,17 +124,18 @@ Public Class TriangleShooter : Inherits Entity
 
             CurrentAngle = OldAngle
 
-        Else
-
-            'Let the laser add the ship to death row
-
         End If
 
+        Dim EntityManager = MainForm.Game.EntityManager
+
+        If EntityManager.WadOEntities(OtherID).GetCreator <> ThisID Then ' Don't want to be killed by your own children
+            MyHealthMgr.Hit(OtherID, OtherEntityType)
+        End If
 
 
     End Sub
 
-    Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer)
+    Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer, ByVal HealthWad As HealthManager.CurrentHealthHolder, ByVal Creator As Integer)
 
         Dim TransMatrix As New Matrix
 
@@ -131,9 +153,26 @@ Public Class TriangleShooter : Inherits Entity
 
         KeyScheme = PassScheme
 
+        MyHealthMgr = New HealthManager(HealthWad)
+
+        If PassScheme = 0 Then
+            DesiredPen = New Pen(Brushes.Red, 5)
+        Else
+            DesiredPen = New Pen(Brushes.LightBlue, 5)
+        End If
+
     End Sub
 
     Public Overrides Sub Update(ByVal d As Double)
+
+        If MyHealthMgr.Health.Dead Then
+
+            MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+            Exit Sub
+
+        End If
+
+        MyHealthMgr.Update(d)
 
         Dim TransMatrix As New Matrix
 
@@ -144,6 +183,10 @@ Public Class TriangleShooter : Inherits Entity
         OldAngle = CurrentAngle
 
         Dim AngleInRad As Double = ((CurrentAngle + 90) * Math.PI) / 180
+
+        Dim rand As New Random()
+
+        Dim ColorBrush As New SolidBrush(Color.Green)
 
         If KeyScheme = 0 Then ' this is a dirty hack that I need to fix
             If Input.KeyStates(Keys.Right) Then
@@ -165,9 +208,10 @@ Public Class TriangleShooter : Inherits Entity
             If Input.KeyStates(Keys.Down) Then
                 MomentumVector -= New System.Windows.Vector(0.25F * Math.Cos(AngleInRad), 0.25F * Math.Sin(AngleInRad))
             End If
+
             If Input.KeyStates(Keys.NumPad0) Then
                 If Not IsNothing(PublicGeometry) Then
-                    MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, Brushes.Green, ThisID))
+                    MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, ColorBrush, ThisID, 10))
                 End If
             End If
         Else
@@ -192,8 +236,9 @@ Public Class TriangleShooter : Inherits Entity
             End If
 
             If Input.KeyStates(Keys.Q) Then
-                MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, Brushes.Green, ThisID))
+                MainForm.Game.EntityManager.SpawnEntity(New rectanglelaser(PublicGeometry(1), 100, CurrentAngle, ColorBrush, ThisID, 10))
             End If
+
         End If
 
 
@@ -231,6 +276,10 @@ Public Class TriangleShooter : Inherits Entity
 
         ' Actually do the transformation on ThisPoints
 
+        TransMatrix.TransformPoints(ThisPoints)
+
+        TransMatrix.Reset()
+        TransMatrix.Translate(MainForm.Game.ScreenOffset.X, MainForm.Game.ScreenOffset.Y)
         TransMatrix.TransformPoints(ThisPoints)
 
         ' Finish update

@@ -1,6 +1,6 @@
 ﻿Public Class EntityManager
 
-    Private Const MaxEntities As Integer = 1024
+    Private Const MaxEntities As Integer = 2048
 
     Public WadOEntities(MaxEntities) As Entity
     Public AvailibleSpots As New List(Of Integer)
