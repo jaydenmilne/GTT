@@ -1,6 +1,21 @@
-﻿Imports System.Drawing.Drawing2D
-
+﻿Imports System
+Imports System.Runtime.Serialization
+Imports System.Xml
+Imports System.Drawing.Drawing2D
+<Serializable()>
 Public Class TriangleShooter : Inherits Entity
+
+    <OnDeserialized()> _
+    Friend Sub Reinitialize(ByVal context As StreamingContext)
+
+        If KeyScheme = 0 Then
+            DesiredPen = New Pen(Brushes.Red, 1)
+        Else
+            DesiredPen = New Pen(Brushes.LightBlue, 1)
+        End If
+
+    End Sub
+
 
 #Region "PublicVars"
     Public ShadowsCurrentAngle As Single = 0
@@ -29,6 +44,7 @@ Public Class TriangleShooter : Inherits Entity
 
     Dim ThisType As EntityTypes.Entities = Entities.Ship
 
+    <NonSerialized()>
     Dim DesiredPen As Pen
 
     Dim Size As Single
@@ -139,7 +155,7 @@ Public Class TriangleShooter : Inherits Entity
 
         Dim TransMatrix As New Matrix
 
-        Size = CSng(0.01 * Renderer.ScreenSize.Width)
+        Size = CSng(0.03 * Renderer.ScreenSize.Width)
 
         TransMatrix.Scale(Size * 0.75F, Size)
 
@@ -156,11 +172,15 @@ Public Class TriangleShooter : Inherits Entity
         MyHealthMgr = New HealthManager(HealthWad)
 
         If PassScheme = 0 Then
-            DesiredPen = New Pen(Brushes.Red, 5)
+            DesiredPen = New Pen(Brushes.Red, 1)
         Else
-            DesiredPen = New Pen(Brushes.LightBlue, 5)
+            DesiredPen = New Pen(Brushes.LightBlue, 1)
         End If
 
+    End Sub
+
+    Sub New()
+        'serialization
     End Sub
 
     Public Overrides Sub Update(ByVal d As Double)
@@ -168,6 +188,7 @@ Public Class TriangleShooter : Inherits Entity
         If MyHealthMgr.Health.Dead Then
 
             MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+
             Exit Sub
 
         End If
@@ -186,7 +207,6 @@ Public Class TriangleShooter : Inherits Entity
 
         Dim rand As New Random()
 
-        Dim ColorBrush As New SolidBrush(Color.Green)
 
         If KeyScheme = 0 Then ' this is a dirty hack that I need to fix
             If Input.KeyStates(Keys.Right) Then
@@ -211,7 +231,7 @@ Public Class TriangleShooter : Inherits Entity
 
             If Input.KeyStates(Keys.NumPad0) Then
                 If Not IsNothing(PublicGeometry) Then
-                    MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, ColorBrush, ThisID, 10))
+                    MainForm.Game.EntityManager.SpawnEntity(New rectanglelaser(PublicGeometry(1), 100, CurrentAngle, Color.Green, ThisID, 10))
                 End If
             End If
         Else
@@ -236,7 +256,7 @@ Public Class TriangleShooter : Inherits Entity
             End If
 
             If Input.KeyStates(Keys.Q) Then
-                MainForm.Game.EntityManager.SpawnEntity(New rectanglelaser(PublicGeometry(1), 100, CurrentAngle, ColorBrush, ThisID, 10))
+                MainForm.Game.EntityManager.SpawnEntity(New rectanglelaser(PublicGeometry(1), 100, CurrentAngle, Color.Green, ThisID, 10))
             End If
 
         End If

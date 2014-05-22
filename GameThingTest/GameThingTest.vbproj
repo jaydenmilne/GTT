@@ -59,6 +59,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
@@ -97,10 +98,9 @@
     <Compile Include="Game\Entity\HealthManager.vb" />
     <Compile Include="Game\Game.vb" />
     <Compile Include="Game\GameState.vb" />
-    <Compile Include="Game\Menu\NewMenuItem.vb" />
+    <Compile Include="Game\Menu\MenuItem.vb" />
     <Compile Include="Game\Menu\HUDAnimator.vb" />
     <Compile Include="Game\Menu\MenuDrawer.vb" />
-    <Compile Include="Game\Menu\MenuItem.vb" />
     <Compile Include="Game\Menu\Menus\PauseMenu.vb" />
     <Compile Include="Render\DrawingUtils.vb" />
     <Compile Include="Render\RenderShapes\Copy of CutOffRectangle.vb" />

@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing.Drawing2D
 
+<Serializable()>
 Public MustInherit Class Entity
 
     Public MustOverride Function EntityType() As EntityTypes.Entities
@@ -32,6 +33,6 @@ Public MustInherit Class Entity
 
     Public MustOverride Function GetCreator() As Integer
 
-    
+
 
 End Class

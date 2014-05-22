@@ -16,7 +16,7 @@ Imports System.Drawing.Drawing2D
 '
 
 '
-
+<Serializable()>
 Public Class laser : Inherits Entity
 
     Public Enum LaserAnimationStatus

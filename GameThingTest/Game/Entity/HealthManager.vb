@@ -1,5 +1,6 @@
-﻿Public Class HealthManager
-
+﻿<Serializable()>
+Public Class HealthManager
+    <Serializable()>
     Public Structure CurrentHealthHolder
 
         Public ShieldPoints As Double
@@ -7,6 +8,7 @@
         Public Damage As Double ' damage is how much damage it does, not how much damage it has
         Public Dead As Boolean
         Public RechargeRate As Double
+
     End Structure
 
 
@@ -55,7 +57,7 @@
 
 
 
-    Public Sub Hit(ByVal OtherID As Integer, OtherType As Entities) ' may want to have different things be better against other things eventually
+    Public Sub Hit(ByVal OtherID As Integer, ByVal OtherType As Entities) ' may want to have different things be better against other things eventually
 
 
         Dim EntityManager = MainForm.Game.EntityManager ' too lazy to keep typing this

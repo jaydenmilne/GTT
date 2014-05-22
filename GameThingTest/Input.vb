@@ -54,5 +54,7 @@
         End If
 
     End Sub
-
+    Public Shared Function DoNothing() As Boolean
+        Return True
+    End Function
 End Class

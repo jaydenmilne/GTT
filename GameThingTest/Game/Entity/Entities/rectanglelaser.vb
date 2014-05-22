@@ -1,6 +1,8 @@
 ﻿Imports System.Windows
 Imports System.Drawing.Drawing2D
-
+Imports System.Runtime.Serialization
+Imports System.Xml
+<Serializable()>
 Public Class rectanglelaser : Inherits Entity
 
     Public Enum LaserAnimationStatus
@@ -22,6 +24,7 @@ Public Class rectanglelaser : Inherits Entity
 
     Dim Angle As Single
 
+    <NonSerialized()>
     Dim MyPen As Pen
 
     Dim MyVector As Vector = New Vector(0, 0)
@@ -38,8 +41,14 @@ Public Class rectanglelaser : Inherits Entity
 
     Dim Damage As Double
 
+    Dim PenColor As Color
+
 
 #Region "GettersAndSetters"
+
+    Sub New()
+        'serialization
+    End Sub
 
     Public Overrides Function GetCreator() As Integer
         Return Creator
@@ -94,13 +103,19 @@ Public Class rectanglelaser : Inherits Entity
 
 #End Region
 
-    Sub New(ByVal PassedStartLocation As PointF, ByVal PassedLength As Integer, ByVal PassedAngle As Single, ByVal PassedPenColor As Brush, ByVal Spawner As Integer, ByVal PassedDamage As Double)
+    <OnDeserialized()> _
+    Friend Sub Reinitialize(ByVal context As StreamingContext)
+        MyPen = New Pen(PenColor)
+    End Sub
+
+    Sub New(ByVal PassedStartLocation As PointF, ByVal PassedLength As Integer, ByVal PassedAngle As Single, ByVal PassedPenColor As Color, ByVal Spawner As Integer, ByVal PassedDamage As Double)
         Length = PassedLength
         StartLocation = PassedStartLocation
         CurrentLocation = StartLocation
         Angle = PassedAngle
         Creator = Spawner
         MyPen = New Pen(PassedPenColor)
+        PenColor = PassedPenColor
 
         AngleInRad = ((Angle + 90) * Math.PI) / 180
 

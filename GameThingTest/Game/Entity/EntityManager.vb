@@ -1,4 +1,8 @@
-﻿Public Class EntityManager
+﻿Imports System
+Imports System.Runtime.Serialization
+Imports System.Xml
+<Serializable()>
+Public Class EntityManager
 
     Private Const MaxEntities As Integer = 2048
 
@@ -7,6 +11,10 @@
     Public NumOfEntities As Integer = 1
     Public DeathRow As New List(Of Integer)
     Public LastEntity As Integer = 0
+
+    Sub New()
+        'serialization
+    End Sub
 
 
     Private Sub AddEntity(ByVal Index As Integer, ByVal EntityToAdd As Entity)

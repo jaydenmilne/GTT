@@ -1,4 +1,9 @@
-﻿Public Class Game
+﻿Imports System.Runtime.Serialization
+Imports System.IO
+Imports System.Runtime.Serialization.Formatters.Binary
+
+
+Public Class Game
 
     Public Timer As Timer
 
@@ -16,9 +21,11 @@
 
     Public MenuToDraw As List(Of MenuItem)
 
-    Public Menuname As String
+    Public MenuName As String
 
     Private MyPauseMenu As PauseMenu
+
+    Public AlreadySerialized As Boolean = False
 
     Sub New()
 
@@ -28,7 +35,7 @@
 
         MenuToDraw = Menu
 
-        Menuname = MenuTitle
+        MenuName = MenuTitle
 
         HudAnimator.ToggleState()
 
@@ -53,6 +60,7 @@
         Timer.Interval = 1
         Timer.Start()
         EntityManager.SpawnEntity(New TriangleShooter(New PointF(500, 500), 0, 1, Temp, -1))
+
         'EntityManager.SpawnEntity(New Square(New PointF(100, 100), 0, 0))
 
 
@@ -117,6 +125,36 @@
 
         GeneralWatch.Stop()
         Diagnostics.CollisionTime = MainForm.Game.GeneralWatch.ElapsedTicks / Stopwatch.Frequency * 1000
+
+    End Sub
+
+    Public Sub SaveGame()
+
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "entities.bin")
+        Dim TestFileStream As Stream = File.Create(Path)
+        Dim Serializer As New BinaryFormatter
+
+
+
+        Serializer.Serialize(TestFileStream, EntityManager)
+
+
+        TestFileStream.Close()
+
+        If Random.Next(0, 1000000) = 123456 Then
+            Throw (New Exception("I randomly decided to fail" & vbNewLine & "There is a 1/1000000 chance of this happening"))
+        End If
+
+    End Sub
+
+    Public Sub LoadGame()
+        Dim Path As String = System.IO.Path.Combine(Application.StartupPath, "entities.bin")
+        Dim Serializer As New BinaryFormatter
+        Dim Stream As New FileStream(Path, FileMode.Open)
+
+        EntityManager = CType(Serializer.Deserialize(Stream), EntityManager)
+
+        Stream.Close()
 
 
     End Sub
