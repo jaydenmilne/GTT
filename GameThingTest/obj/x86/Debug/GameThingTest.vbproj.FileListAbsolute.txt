@@ -27,3 +27,6 @@ C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThing
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.vbproj.GenerateResource.Cache
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.exe
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.xml
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.pdb
