@@ -1,5 +1,8 @@
 ﻿Public Class MainForm
     Dim MyWatch As New Stopwatch
+    Public RenderMilliseconds As Double
+    Public UpdateMilliseconds As Double
+    Public Game As New Game()
 
     'no real code should go here, it all should be elsewhere
 
@@ -30,13 +33,20 @@
 
         Dim PrevTicks As Long = MyWatch.ElapsedTicks
         MyWatch.Restart()
+
         Game.Update(PrevTicks / Stopwatch.Frequency * 1000)
+
+        UpdateMilliseconds = MyWatch.ElapsedTicks / Stopwatch.Frequency * 1000
+
         Renderer.Render(PrevTicks / Stopwatch.Frequency * 1000)
 
+        RenderMilliseconds = (MyWatch.ElapsedTicks / Stopwatch.Frequency * 1000) - UpdateMilliseconds
+
     End Sub
+
+
 
     Private Sub GameTimer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GameTimer.Tick
         Tick()
     End Sub
-
 End Class

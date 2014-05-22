@@ -1,25 +1,46 @@
 ﻿Public Class Game
-    Public Shared Timer As Timer = MainForm.GameTimer
-    Public Shared Shooter As New TriangleShooter
+
+    Public Timer As Timer
+
+    Public HudAnimator As HUDAnimator
+
+    Private Random As New Random
+
+    Public EntityManager As New EntityManager()
+
     Sub New()
 
     End Sub
 
-    Public Shared Sub Initialize()
+    Public Sub Initialize()
+
+        Timer = MainForm.GameTimer
+
         Timer.Interval = 1
         Timer.Start()
+
+        EntityManager.AddEntity(New TriangleShooter(New PointF(100, 100), 0, 0))
+        EntityManager.AddEntity(New TriangleShooter(New PointF(500, 500), 0, 1))
+        EntityManager.AddEntity(New TriangleShooter(New PointF(1000, 1000), 0, 0))
+
+
     End Sub
 
-    Public Shared Sub Update(ByVal ElapsedMilliseconds As Double)
+    Public Sub Update(ByVal ElapsedMilliseconds As Double)
 
-        ' Debug.WriteLine(ElapsedMilliseconds)
 
         If Input.KeyStates(Keys.Escape) Then
-            HUDAnimator.ToggleState()
+            HudAnimator.ToggleState()
         End If
 
-        HUDAnimator.Update(ElapsedMilliseconds)
-        Shooter.Update(ElapsedMilliseconds)
+        HudAnimator.Update(ElapsedMilliseconds)
+
+
+
+        EntityManager.UpdateAll(ElapsedMilliseconds)
+
+
+        CollisionDetector.CheckAllForCollission(EntityManager.WadOEntities, EntityManager.NumOfEntities) ' lets see if this works
 
 
     End Sub

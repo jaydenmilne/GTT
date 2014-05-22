@@ -1,23 +1,26 @@
 ﻿Public Class CutOffRectangle : Inherits Renderer
     Public Inset As Integer
-    Dim TriangleLegSize As Integer
-    Dim HudPen As New Pen(Brushes.White)
+    Dim TriLeg As Integer
+    Dim HudPen As Pen
+    Dim Size As Size
+    Dim MyRect As Rectangle
+    Dim Location As Point
 
-    Sub New()
+    Sub New(ByVal PassedLocation As Point, ByVal PassedSize As Size)
 
         If Not Initialized Then
             Throw New Exception("Rectangle thing tried to initialize before the renderer was done. You're bad!")
         End If
 
-        HudPen.LineJoin = Drawing2D.LineJoin.Round
+        Size = PassedSize
+        Location = PassedLocation
 
 
-        Inset = CInt(0.01 * ScreenSize.Height)
-        HudPen.Width = CInt(Inset / 3)
 
-        TriangleLegSize = CInt(0.068 * ScreenSize.Height)
+        TriLeg = CInt(0.068 * Size.Height)
 
-        HudPen.Width = CSng(Inset * 1 / 2)
+        HudPen = New Pen(Brushes.White, CSng(Size.Width * 0.002))
+
 
     End Sub
 
@@ -28,36 +31,25 @@
 
         HUDPoints.StartFigure()
 
-        HUDPoints.AddLine(Inset + TriangleLegSize,
-                          Inset, ScreenSize.Width - Inset,
-                          Inset)
+        Dim WidthOffset As Single = (ScreenSize.Width - Size.Width) / 2.0F
 
-        HUDPoints.AddLine(ScreenSize.Width - Inset,
-                          Inset,
-                          ScreenSize.Width - Inset,
-                          ScreenSize.Height - (Inset + TriangleLegSize))
+        Dim HeightOffset As Single = (ScreenSize.Height - Size.Height) / 2.0F
 
-        HUDPoints.AddLine(ScreenSize.Width - Inset,
-                          ScreenSize.Height - (Inset + TriangleLegSize),
-                          ScreenSize.Width - (Inset + TriangleLegSize),
-                          ScreenSize.Height - Inset)
+        'Debug.WriteLine(WidthOffset)
+        Debug.WriteLine(HeightOffset)
 
-        HUDPoints.AddLine(ScreenSize.Width - (Inset + TriangleLegSize),
-                          ScreenSize.Height - Inset,
-                          Inset,
-                          ScreenSize.Height - Inset)
 
-        HUDPoints.AddLine(Inset,
-                          ScreenSize.Height - Inset,
-                          Inset,
-                          Inset + TriangleLegSize)
+        HUDPoints.AddLine(WidthOffset + TriLeg, HeightOffset, Size.Width, HeightOffset)
+        HUDPoints.AddLine(Size.Width, HeightOffset, Size.Width, HeightOffset + (Size.Height - TriLeg))
 
-        HUDPoints.AddLine(Inset,
-                          Inset + TriangleLegSize,
-                          Inset + TriangleLegSize,
-                          Inset)
+
+
+
+
+
 
         Buffer.Graphics.DrawPath(HudPen, HUDPoints)
+
 
         HUDPoints.Dispose()
 

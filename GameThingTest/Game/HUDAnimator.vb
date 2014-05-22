@@ -7,7 +7,7 @@
         GoingMenu
     End Enum
 
-    Shared CurrentState As States = States.Fullscreen
+    Public Shared CurrentState As States = States.Fullscreen
 
 
     Public Shared Sub ToggleState()
@@ -29,26 +29,23 @@
 
         If CurrentState = States.GoingMenu Then
 
-            TimeSkipAnimate(2, 200, ElapsedMilleseconds)
+            Shrink(2, 200, ElapsedMilleseconds)
+
         ElseIf CurrentState = States.GoingFullscreen Then
 
-            TimeSkipAnimate(-2, 400, ElapsedMilleseconds)
+            Shrink(2, 400, ElapsedMilleseconds)
+
         End If
 
 
     End Sub
 
-    Private Shared Sub TimeSkipAnimate(ByVal Velocity As Integer, ByVal StopVal As Integer, ByVal ElapsedMilliseconds As Double)
+    Private Shared Sub Shrink(ByVal Velocity As Integer, ByVal StopVal As Integer, ByVal ElapsedMilliseconds As Double)
         'position = velocity *(CurrentTime - LastTimeSinceRender)
 
-        If CurrentState = States.GoingMenu Then
             If HUD.Inset <= StopVal Then
 
-                Dim Change As Integer
-
-                Change = CInt(Velocity * ElapsedMilliseconds)
-
-                HUD.Inset += Change
+            HUD.Inset += CInt(Velocity * ElapsedMilliseconds)
 
 
             ElseIf HUD.Inset >= StopVal Then
@@ -58,26 +55,21 @@
 
             End If
 
-        ElseIf CurrentState = States.GoingFullscreen Then
-            If HUD.Inset >= StopVal Then
 
-                Dim Change As Integer
+    End Sub
 
-                Change = CInt(Velocity * ElapsedMilliseconds)
+    Private Shared Sub Grow(ByVal Velocity As Integer, ByVal StopVal As Integer, ByVal ElapsedMilliseconds As Double)
 
-                HUD.Inset += Change
+        If HUD.Inset >= StopVal Then
 
+            HUD.Inset -= CInt(Velocity * ElapsedMilliseconds)
 
-            ElseIf HUD.Inset <= StopVal Then
+        ElseIf HUD.Inset <= StopVal Then
 
-                CurrentState = States.Fullscreen
+            CurrentState = States.Menu
 
-
-            End If
 
         End If
-
-
     End Sub
 
 

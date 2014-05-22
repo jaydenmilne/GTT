@@ -1,12 +1,9 @@
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.vbproj.GenerateResource.Cache
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\bin\Debug\GameThingTest.exe
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\bin\Debug\GameThingTest.pdb
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\bin\Debug\GameThingTest.xml
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.exe
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.xml
-C:\Users\Jayden\AppData\Local\Temporary Projects\GameThingTest\obj\x86\Debug\GameThingTest.pdb
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.exe
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.pdb
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.xml
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.vbproj.GenerateResource.Cache
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.exe
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.xml
 C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.pdb
@@ -21,12 +18,12 @@ C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Game
 C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
 C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GenerateResource.read.1.tlog
 C:\Users\jaydlmiln44\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GenerateResource.write.1.tlog
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.exe
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.pdb
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\bin\Debug\GameThingTest.xml
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\GameThingTest\obj\x86\Debug\GameThingTest.vbproj.GenerateResource.Cache
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.exe
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.xml
-C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.02\GameThingTest\obj\x86\Debug\GameThingTest.pdb
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.exe
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.xml
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.pdb
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\bin\Debug\GameThingTest.exe
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\bin\Debug\GameThingTest.pdb
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\bin\Debug\GameThingTest.xml
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.MainForm.resources
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.Resources.resources
+C:\Users\Jayden\Dropbox\Code\Visual Studio 2010\Projects\GameThingTest\Nostalgia\GTT 0.03\GameThingTest\obj\x86\Debug\GameThingTest.vbproj.GenerateResource.Cache
