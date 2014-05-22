@@ -4,109 +4,101 @@
 
     Public WadOEntities(MaxEntities) As Entity
     Public AvailibleSpots As New List(Of Integer)
-    Public NumOfEntities As Integer = 0
+    Public NumOfEntities As Integer = 1
     Public DeathRow As New List(Of Integer)
-    Sub New()
-        ' woooooo
+    Public LastEntity As Integer = 0
+
+
+    Private Sub AddEntity(ByVal Index As Integer, ByVal EntityToAdd As Entity)
+
+        If Index > LastEntity Then
+            LastEntity = Index
+        End If
+
+        WadOEntities(Index) = EntityToAdd
+
+        WadOEntities(Index).SetID(Index)
+
+        NumOfEntities += 1
+
     End Sub
 
 
+    Public Function SpawnEntity(ByVal EntityToAdd As Entity) As Integer
 
-    Public Sub AddEntity(ByVal EntityToAdd As Entity)
+        Dim Index As Integer = 0
 
-        If AvailibleSpots.Count <> 0 Then ' if there are no holes in array this will prevent out of bounds exception
-
-            WadOEntities(AvailibleSpots(0)) = EntityToAdd ' must check to ensure that any value in AvailibleSpots <= MaxEntities
-            WadOEntities(AvailibleSpots(0)).SetID(0)
-
-
-            NumOfEntities += 1
-
-            AvailibleSpots.RemoveAt(0)
-
-        Else ' There are no holes in the array, so we can just add something to it
-
-            If NumOfEntities > MaxEntities Then
-                Throw New Exception("Too many entities!")
-            Else
-                WadOEntities(NumOfEntities) = EntityToAdd
-                WadOEntities(NumOfEntities).SetID(NumOfEntities)
-
-                NumOfEntities += 1
-
+        While Not IsNothing(WadOEntities(Index))
+            Index += 1
+            If Index > MaxEntities Then
+                Throw New Exception("There are too many entities. Either you glitched it, which is your fault, or you hacked it, which is also your fault. In no way could it possibly be my fault, silly. You're bad!")
             End If
+        End While
+
+        AddEntity(Index, EntityToAdd)
+
+        Return Index
+
+    End Function
+
+
+
+    Private Sub RemoveEntity(ByVal EntityToRemove As Integer)
+
+
+        If IsNothing(WadOEntities(EntityToRemove)) Then
+            Throw New Exception("Tried to remove an already removed entity. You're bad!")
+        End If
+
+        WadOEntities(EntityToRemove) = Nothing
+
+        If EntityToRemove = LastEntity Then
+
+            Dim Index As Integer = MaxEntities
+
+            While IsNothing(WadOEntities(Index))
+                Index -= 1
+            End While
+
+            LastEntity = Index
 
 
         End If
 
 
+        NumOfEntities -= 1
 
     End Sub
 
-    Public Sub RemoveEntity(ByVal EntityToRemove As Integer)
+    Public Sub ExecutePrisoners()
 
-        If NumOfEntities > 0 Then
+        For Each Item In DeathRow
+            RemoveEntity(Item)
+        Next
 
-
-            WadOEntities(EntityToRemove) = Nothing
-
-            NumOfEntities -= 1
-
-            AvailibleSpots.Add(EntityToRemove)
-
-            AvailibleSpots.Sort()
-
-
-
-        End If
-
-        
+        DeathRow.Clear()
 
     End Sub
+
 
     Public Sub UpdateAll(ByVal Elapsed As Double)
-        For i As Integer = 0 To NumOfEntities + AvailibleSpots.Count
+        For i As Integer = 0 To LastEntity
             If Not IsNothing(WadOEntities(i)) Then
                 WadOEntities(i).Update(Elapsed)
             End If
 
         Next
 
-        If DeathRow.Count <> 0 Then
-
-            For a As Integer = 0 To DeathRow.Count - 1
-                RemoveEntity(DeathRow(a))
-
-
-                If a > DeathRow.Count - 1 Then
-                    Exit For
-                End If
-
-            Next
-
-            DeathRow.Clear()
-
-        End If
 
     End Sub
 
     Public Sub AddToDeathRow(ByVal ID As Integer)
 
+
         If Not DeathRow.Contains(ID) Then
             DeathRow.Add(ID)
-        Else
-            ' whoop de do
         End If
 
     End Sub
-
-    Public Sub UnDelete(ByVal ID As Integer)
-
-    End Sub
-
-
-
-
-
 
 End Class

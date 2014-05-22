@@ -16,7 +16,7 @@ Public MustInherit Class Entity
 
     Public MustOverride Function GetPublicGeometry() As PointF()
 
-    Public MustOverride Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+    Public MustOverride Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
     Sub New(ByVal StartLocation As PointF, ByVal InitialAngle As Single, ByVal PassScheme As Integer)
     End Sub

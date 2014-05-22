@@ -8,6 +8,9 @@
         Label3.Text = CStr(Input.MouseStates(0))
         Label4.Text = CStr(Input.MouseStates(Input.Mouse.Right))
 
+        Dim TempString As String = "Update: " & CStr(Diagnostics.UpdateTime) & vbNewLine & "Collision: " & CStr(Diagnostics.CollisionTime) & vbNewLine & "Render: " & CStr(Diagnostics.RenderTime) & vbNewLine & "Buffer Fill: " & Diagnostics.BufferRender
+        TextBox2.Text = TempString
+
 
 
 
@@ -27,6 +30,17 @@
 
         Next
 
+        TextBox3.Text = String.Join(",", MainForm.Game.EntityManager.DeathRow.ToArray)
+
         TextBox1.Text = Output
+
+        TextBox5.Text = Diagnostics.Caller
+
+
+    End Sub
+
+
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        Diagnostics.OneToSpyOn = CInt(TextBox4.Text)
     End Sub
 End Class

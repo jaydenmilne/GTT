@@ -60,7 +60,7 @@ Public Class Square : Inherits Entity
         Return PublicGeometry
     End Function
 
-    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
         If OtherVector.Length > MomentumVector.Length Then
 

@@ -78,7 +78,11 @@ Public Class TriangleShooter : Inherits Entity
 
 #End Region
 
-    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+    Public Overrides Function ToString() As String
+        Return CStr(KeyScheme)
+    End Function
+
+    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
         If OtherEntityType = Entities.Ship Then
             If OtherVector.Length > MomentumVector.Length Then
@@ -101,7 +105,7 @@ Public Class TriangleShooter : Inherits Entity
 
         Else
 
-            MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+            'Let the laser add the ship to death row
 
         End If
 
@@ -141,7 +145,7 @@ Public Class TriangleShooter : Inherits Entity
 
         Dim AngleInRad As Double = ((CurrentAngle + 90) * Math.PI) / 180
 
-        If KeyScheme = 0 Then
+        If KeyScheme = 0 Then ' this is a dirty hack that I need to fix
             If Input.KeyStates(Keys.Right) Then
                 CurrentAngle += 1.0F / 2.0F * CSng(d)
             End If
@@ -160,6 +164,11 @@ Public Class TriangleShooter : Inherits Entity
 
             If Input.KeyStates(Keys.Down) Then
                 MomentumVector -= New System.Windows.Vector(0.25F * Math.Cos(AngleInRad), 0.25F * Math.Sin(AngleInRad))
+            End If
+            If Input.KeyStates(Keys.NumPad0) Then
+                If Not IsNothing(PublicGeometry) Then
+                    MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, Brushes.Green, ThisID))
+                End If
             End If
         Else
             If Input.KeyStates(Keys.D) Then
@@ -183,7 +192,7 @@ Public Class TriangleShooter : Inherits Entity
             End If
 
             If Input.KeyStates(Keys.Q) Then
-                MainForm.Game.EntityManager.AddEntity(New laser(Location, 100, CurrentAngle, Brushes.Green))
+                MainForm.Game.EntityManager.SpawnEntity(New laser(PublicGeometry(1), 100, CurrentAngle, Brushes.Green, ThisID))
             End If
         End If
 

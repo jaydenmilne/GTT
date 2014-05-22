@@ -26,6 +26,8 @@ Public Class laser : Inherits Entity
 
     Dim AngleInRad As Double
 
+    Dim Creator As Integer
+
 #Region "GettersAndSetters"
 
     Public Overrides Function GetAngle() As Single
@@ -58,11 +60,12 @@ Public Class laser : Inherits Entity
 
 #End Region
 
-    Sub New(ByVal PassedStartLocation As PointF, ByVal PassedLength As Integer, ByVal PassedAngle As Single, ByVal PassedPenColor As Brush)
+    Sub New(ByVal PassedStartLocation As PointF, ByVal PassedLength As Integer, ByVal PassedAngle As Single, ByVal PassedPenColor As Brush, ByVal Spawner As Integer)
         Length = PassedLength
         StartLocation = PassedStartLocation
         CurrentLocation = StartLocation
         Angle = PassedAngle
+        Creator = Spawner
         MyPen = New Pen(PassedPenColor, 5)
 
         AngleInRad = ((Angle + 90) * Math.PI) / 180
@@ -72,18 +75,19 @@ Public Class laser : Inherits Entity
         UnMoved = {New PointF(0, 0),
                    New PointF(CSng(MyVector.X * Length), CSng(MyVector.Y * Length))}
 
-        Update(0)
-
         Size = Length
 
+        Update(0)
 
     End Sub
 
-    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities)
+    Public Overrides Sub Collided(ByVal OtherVector As System.Windows.Vector, ByVal OtherAngle As Single, ByVal OtherEntityType As Entities, ByVal OtherID As Integer)
 
-        'If Not IsNothing(ThisID) Then
-        '    MainForm.Game.EntityManager.AddToDeathRow(ThisID)
-        'End If
+        If OtherID <> Creator And OtherEntityType <> Entities.Laser Then
+            MainForm.Game.EntityManager.AddToDeathRow(OtherID)
+        Else
+            'is is its creator, and we don't want to blow that up
+        End If
 
     End Sub
 
@@ -100,9 +104,9 @@ Public Class laser : Inherits Entity
 
         ThisPoints = UnMoved.ToArray()
 
-        CurrentLocation.X = CSng(CurrentLocation.X + (MyVector.X * 10))
+        CurrentLocation.X = CSng(CurrentLocation.X + (MyVector.X * d))
 
-        CurrentLocation.Y = CSng(CurrentLocation.Y + (MyVector.Y * 10))
+        CurrentLocation.Y = CSng(CurrentLocation.Y + (MyVector.Y * d))
 
 
         TransMatrix.Translate(CurrentLocation.X, CurrentLocation.Y)
@@ -111,6 +115,10 @@ Public Class laser : Inherits Entity
 
 
         PublicGeom = ThisPoints.ToArray()
+
+        If DrawingUtils.DistanceBetweenTwoPoints(CurrentLocation, StartLocation) > 3000 Then
+            MainForm.Game.EntityManager.AddToDeathRow(ThisID)
+        End If
 
     End Sub
 

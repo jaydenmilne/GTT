@@ -18,11 +18,12 @@
     Public Sub CheckAllForCollission(ByVal entities() As Entity, ByVal NumberOfEntities As Integer)
 
 
-        If NumberOfEntities <= 1 Then
-            Exit Sub
+
+        If Input.KeyStates(Keys.L) Then
+            Console.WriteLine("your mom") ' I have no i
         End If
 
-        If IsNothing(entities(NumberOfEntities - 1)) Then
+        If NumberOfEntities <= 1 Then
             Exit Sub
         End If
 
@@ -55,8 +56,8 @@
                             Dim LoopedVector As System.Windows.Vector = entities(LoopedEntity).GetVector()
                             Dim OutsideVector As System.Windows.Vector = entities(CurrentEntity).GetVector()
 
-                            entities(LoopedEntity).Collided(OutsideVector, entities(CurrentEntity).GetAngle, entities(CurrentEntity).EntityType())
-                            entities(CurrentEntity).Collided(LoopedVector, entities(LoopedEntity).GetAngle, entities(LoopedEntity).EntityType)
+                            entities(LoopedEntity).Collided(OutsideVector, entities(CurrentEntity).GetAngle, entities(CurrentEntity).EntityType(), entities(CurrentEntity).GetID)
+                            entities(CurrentEntity).Collided(LoopedVector, entities(LoopedEntity).GetAngle, entities(LoopedEntity).EntityType, entities(LoopedEntity).GetID)
 
 
 

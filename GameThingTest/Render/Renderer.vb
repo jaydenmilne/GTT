@@ -63,20 +63,31 @@ Public Class Renderer
     Public Shared Sub Render(ByVal time As Double)
         Buffer.Graphics.Clear(Color.Black)
 
+        MainForm.Game.GeneralWatch.Restart()
 
-        Buffer.Graphics.DrawString("Frame Time: " & CStr(Math.Round(time, 0)) & " Entities:" & CStr(MainForm.Game.EntityManager.NumOfEntities), New Font("Consolas", 8, FontStyle.Regular), Brushes.White, New Point(0, 0))
+        Buffer.Graphics.DrawString("Frame Time: " & CStr(Math.Round(time, 0)) & " FPS: " & CStr(Math.Round(1000 / time, 1)) & " Entities:" & CStr(MainForm.Game.EntityManager.NumOfEntities), New Font("Consolas", 8, FontStyle.Regular), Brushes.White, New Point(0, 30))
 
-        For i As Integer = 0 To MainForm.Game.EntityManager.NumOfEntities + MainForm.Game.EntityManager.AvailibleSpots.Count - 1
-            If Not IsNothing(MainForm.Game.EntityManager.WadOEntities(i)) Then
-                Buffer.Graphics.DrawLines(MainForm.Game.EntityManager.WadOEntities(i).GetPen(), MainForm.Game.EntityManager.WadOEntities(i).GetPublicGeometry())
+        Dim Temp = MainForm.Game.EntityManager
+
+        For i As Integer = 0 To Temp.LastEntity
+            If Not IsNothing(Temp.WadOEntities(i)) Then
+                Buffer.Graphics.DrawLines(Temp.WadOEntities(i).GetPen, Temp.WadOEntities(i).GetPublicGeometry)
             End If
+
         Next
 
 
         HUD.Draw(True)
 
+        MainForm.Game.GeneralWatch.Stop()
+        Diagnostics.RenderTime = MainForm.Game.GeneralWatch.ElapsedTicks / Stopwatch.Frequency * 1000
+        MainForm.Game.GeneralWatch.Restart()
+
         Buffer.Render()
 
+        MainForm.Game.GeneralWatch.Stop()
+
+        Diagnostics.BufferRender = MainForm.Game.GeneralWatch.ElapsedTicks / Stopwatch.Frequency * 1000
 
 
     End Sub
