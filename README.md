@@ -5,6 +5,10 @@ Game Thing Test: The best thing to happen to videogames since ET for the Atari. 
 
 See also GTTGUI.
 
+Just want to play it? Get this zip file
+
+http://github.com/jaydenmilne/GTT/blob/master/GameThingTest/Misc/GameThingTest.zip
+
 Basic Info
 ===
 
