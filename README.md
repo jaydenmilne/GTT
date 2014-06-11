@@ -19,7 +19,7 @@ Features:
 - Fully vectorized graphics (no images/pictureboxes) 
 - Automatically scalable (no hard coded coordinates in the whole game!) 
 - Double buffering, AntiAliasing (Disabled in renderer.vb, set smoothingmode to HighQuality)
-- Very accurate collisions (too accurate, collision detection slows the whole thing down)
+- Very accurate collision detection (What I do after detecting the collisions, not so much)
 - Flexible menu system (menuitems are added dynamically and there are no hardcoded locations) 
 - Easy to create new ships/classes 
 - Health manager (shields/hull health)
