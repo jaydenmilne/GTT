@@ -5,14 +5,12 @@ Game Thing Test: The best thing to happen to videogames since ET for the Atari. 
 
 See also GTTGUI.
 
-Just want to play it? Get this zip file
+Just want to play it? Get [this](http://github.com/jaydenmilne/GTT/raw/master/GameThingTest/Misc/GameThingTest.zip) zip file
 
-http://github.com/jaydenmilne/GTT/raw/master/GameThingTest/Misc/GameThingTest.zip
+
 
 Basic Info
 ===
-
-From PauseMenu.vb:
 
 This game was created in 2013/14 by Jayden Milne. There is a lot more that I wanted to do, but this is it I guess.
 Features: 
