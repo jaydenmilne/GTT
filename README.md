@@ -32,6 +32,9 @@ Features:
 - Lag
 - and much more
 
+Screenshot
+===
+![Pew pew pew!](http://i.imgur.com/J2yuEBf.png "Shooting things")
 Long Term Goals
 ===
 Probably not going to happen:
