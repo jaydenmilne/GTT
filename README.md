@@ -1,11 +1,8 @@
 UPDATE 2018
 ===========
-This is mostly included for historical purposes. I wrote this while in high school, it was the first programming project I had that was more than one file!
-A lot of this code is really bad, but I like keeping it around to look back at where I was when I started programming.
+This is mostly up on GitHub so I can reminisce and laugh at it. I wrote this while in high school, it was my first multi-file programming project, and I really had no idea what I was doing. But I stumbled through it somehow!
 
 **Note that it is currently very broken on Windows 10 and high DPI displays** - maybe one day I'll patch it.
-
-
 
 GTT
 ===
